@@ -3,6 +3,8 @@
 //////////////////////////// instanceof
 //////////////////////////// Проверка, принадлежит ли объект классу
 
+let a
+let b
 
 class Human {}
 let alena = new Human()
@@ -50,8 +52,23 @@ myInstanceof(alena, Human) // true
 
 
 
-// Temporal Dead Zone
-// Временная мертвая зона
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////// Temporal Dead Zone
+////////////// Временная мертвая зона
 
 // TDZ -- это явление, которое возникает, в момент объвления переменной, значение которой, не было объявлено.
 
@@ -71,21 +88,29 @@ myInstanceof(alena, Human) // true
 //
 //
 // let a = f()
-// const b = 2
+// b = 2
 // function f() { return b }
 //
 //
 // (function (a = b, b) {
 //     // console.log(a , b)
 // })
+//
+//
+// let user = {d: 'gggg'}
+// let admin = user // {d: 'gggg'}
+//
+// user = null
+
+// console.log(user, admin) // null, {d: 'gggg'}
 
 
-let user = {d: 'gggg'}
-let admin = user
 
-user = null
 
-// console.log(user, admin)
+
+
+
+
 
 
 
@@ -101,6 +126,8 @@ Boolean(1) // true
 Boolean('0') // true
 Boolean(null) // false
 Boolean(undefined) // false
+Boolean(NaN) // false
+Boolean(Symbol) // true
 
 
 String(null) // 'null'
@@ -109,6 +136,9 @@ String({}) // '[object Object]'
 String({a: 1}) // '[object Object]'
 String([]) // ''
 String([1, 2]) // '1,2'
+String(Symbol) // 'function Symbol() { [native code] }'
+String(Symbol()) // 'Symbol()'
+
 
 
 Number('2.1p') // NaN
@@ -120,8 +150,9 @@ Number([5]) // 5
 Number([5, 5]) // NaN
 Number({}) // NaN
 Number({a: 1}) // NaN
+Number(Symbol) // NaN
 
-let a = !!null // null - false, !null - true, !!null - false и так далее
+a = !!null // null - false, !null - true, !!null - false и так далее
 
 parseInt('ppp13') // NaN
 parseInt('13ppp') // 13
@@ -143,6 +174,17 @@ parseInt('0101px', 2) //  5 (2ой аргумент говорит о систе
 // }
 //
 // myParseInt('1p23')
+
+
+
+
+
+
+
+
+
+
+
 
 
 //////////////////////////// ЛОГИЧЕСКИЕ ОПЕРАТОРЫ ////////////////////////////
@@ -174,8 +216,8 @@ a = undefined || null || 0 // 0 (поскольку все ложно, возв�
 // то же самое
 a = false
 if (a === false) {
-    a = 'alenka'
-} // если a = true, то вернет значение a
+    a = 'alenka' // alenka
+}
 
 
 '&&' // И если один false = false иначе true
@@ -183,16 +225,71 @@ if (a === false) {
 a = true && true // true
 a = false && true // false
 a = true && false // false
-a = false & false // false
+a = false && false // false
 
+a = a && a && a // ищет false слева на право
 
-console.log(a)
+// ПРИОРИТЕТ && БОЛЬШЕБ ЧЕМ ||
+
+a = 0 || 1 && 2 || 4 // тоже самое что 0 || (1 && 2) || 4
+// Ответ 2
 
 '&&=' // Оператор логического присваивания И
+// a && (a = b) то же самое, что и ||=, но наоборот
+
+a = true
+if (a === true) {
+    a = 'alenka'  // alenka
+}
 
 '!' // НЕ
 
+a = false
+
+a = !a // возвращает противоположное boolean значение
+a = !!a // true
+
+// ! САМЫЙ БОЛЬШОЙ ПРИОРИТЕТ
+
+
 '??' // Оператор нулевого слияния
+// показывает первое значение, которое определено
+
+a = a ?? b
+a =  (a !== null && a !== undefined) ? a : b // тоже самое
+
+a = b ?? 'aaaa' // 'aaaa' так как b НЕ определено
+
+b = 'bbbb'
+
+a = b ?? 'aaaa' // 'bbbb' так как b определено
+
+
+a = undefined
+b = undefined // значение не определено
+a = a ?? b // undefined
+
+
+
 '??=' // Оператор нуливого присваивания
+a = a ??= b // тоже самое что
+
+a = null
+if (a === null || a === undefined) {
+    a = 'alenka' // или значение b
+}
+
+// console.log(a) // 'alenka'
+
+
+
+
+
+
+
+
+
+////////////////////////// ОПЦИОНАЛЬНАЯ ЦЕПОЧКА ?. /////////////////////////
+
 
 
